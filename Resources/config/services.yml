@@ -1,6 +1,8 @@
 services:
   autopilot:
-    class: Inspectioneering\AutopilotBundle\AutopilotManager
+    class: Inspectioneering\AutopilotBundle\Service\AutopilotManager
     public: true
     arguments:
       - '%autopilot.api_key%'
+
+  Inspectioneering\AutopilotBundle\Service\AutopilotManager: '@autopilot'

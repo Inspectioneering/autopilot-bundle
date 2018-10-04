@@ -21,14 +21,14 @@ class AutopilotManager extends \Autopilot\AutopilotManager
      * Convenience function that finds or creates a contact based on an email address and updates one or more additional
      * Autopilot Custom Fields.
      *
-     * @param $email
+     * @param string $email
      * @param array $params
      * @return AutopilotContact
      * @throws AutopilotException
      */
     public function setContact($email, array $params = array())
     {
-        if (!$contact = $this->getContact($email)) {
+        if (!$contact = $this->getContactOrNull($email)) {
             $contact = new AutopilotContact();
             $contact->setFieldValue('email', $email);
         }
@@ -36,5 +36,37 @@ class AutopilotManager extends \Autopilot\AutopilotManager
         $contact->fill($params);
 
         return $this->saveContact($contact);
+    }
+
+    /**
+     * Convenience function that adds an AutopilotContact to a list by name.
+     *
+     * @param AutopilotContact $contact
+     * @param string $list
+     * @return bool
+     * @throws AutopilotException
+     */
+    public function addToList(AutopilotContact $contact, $list)
+    {
+        if ($listId = $this->getListByName($list)) {
+            return $this->addContactToList($listId, $contact->getFieldValue('contact_id'));
+        }
+
+        return false;
+    }
+
+    /**
+     * Try to get a contact from Autopilot. If not found, return null instead of throwing an exception.
+     *
+     * @param string $email
+     * @return AutopilotContact|null
+     */
+    private function getContactOrNull($email)
+    {
+        try {
+            return $this->getContact($email);
+        } catch (AutopilotException $e) {
+            return null;
+        }
     }
 }
