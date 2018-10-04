@@ -1,6 +1,6 @@
 <?php
 
-namespace Inspectioneering\AutopilotBundle\Service;
+namespace Inspectioneering\AutopilotBundle;
 
 use Autopilot\AutopilotContact;
 use Autopilot\AutopilotException;
