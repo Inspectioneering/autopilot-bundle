@@ -44,3 +44,27 @@ class AppKernel extends Kernel
     // ...
 }
 ```
+
+Usage
+=====
+
+This bundle provides a convenience method to create or modify an Autopilot contact. For example:
+
+```php
+<?php
+
+// ..
+class AppController
+{
+    public function register(AutopilotManager $ap)
+    {
+        //...
+        $ap->setContact($email, [
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'Custom Field' => $custom,
+            // ...
+        ]);
+    }
+}
+```
