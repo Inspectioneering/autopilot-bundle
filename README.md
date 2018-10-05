@@ -48,7 +48,9 @@ class AppKernel extends Kernel
 Usage
 =====
 
-This bundle provides a convenience method to create or modify an Autopilot contact. For example:
+This bundle provides a few convenience methods in addition to those provided by [php-autopilothq](https://github.com/dekalee/php-autopilothq).
+
+Create a contact based on email if it doesn't exist, or modify if it does. Also optionally update one or more fields.
 
 ```php
 <?php
@@ -59,12 +61,29 @@ class AppController
     public function register(AutopilotManager $ap)
     {
         //...
-        $ap->setContact($email, [
+        $contact = $ap->setContact($email, [
             'firstName' => $firstName,
             'lastName' => $lastName,
             'Custom Field' => $custom,
             // ...
         ]);
+    }
+}
+```
+
+Add a contact to a list by name.
+
+```php
+<?php
+
+// ..
+class AppController
+{
+    public function register(AutopilotManager $ap)
+    {
+        // $contact = $ap->setContact(...)
+
+        $ap->addToList($contact, "Autopilot List Name");
     }
 }
 ```
