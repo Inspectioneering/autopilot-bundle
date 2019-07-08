@@ -35,6 +35,11 @@ class AutopilotManager extends \Autopilot\AutopilotManager
 
         $contact->fill($params);
 
+        // If a contact's email permission was removed and manually re-added in Autopilot, two NULL fields will be
+        // added and the saveContact call won't work. This removes those fields.
+        $contact->unsetFieldValue('MailSunsetUnsubscribed');
+        $contact->unsetFieldValue('MailApiunsubscribed');
+
         return $this->saveContact($contact);
     }
 
